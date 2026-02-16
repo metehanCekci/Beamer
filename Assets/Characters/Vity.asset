@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 668ece647cba6314686ec7d7f52a17f9, type: 3}
+  m_Name: Vity
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterData
+  characterName: Vity
+  description: The first playable character
+  characterPortrait: {fileID: 0}
+  characterIcon: {fileID: 0}
+  characterPrefab: {fileID: 2266750758799203403, guid: 5d11fb87af21b9a4f912f93cf8c639da, type: 3}
+  animatorController: {fileID: 9100000, guid: 0be550c3477d9e548aa183be3688aeaf, type: 2}
+  baseMaxHealth: 80
+  baseMoveSpeed: 6.5
+  baseDashSpeed: 18
+  baseDashCooldown: 1
+  characterWeaponType: 1
+  baseDamage: 12
+  baseFireRate: 1
+  baseRange: 10
+  baseProjectileSpeed: 15
+  hasUniquePassive: 0
+  passiveDescription: 
+  isUnlocked: 0
+  unlockCost: 1000
