@@ -5504,6 +5504,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 3331348133042711689, guid: 84c28640e6b95a64bbe3d2e113355e4d, type: 3}
+      propertyPath: currentCharacter
+      value: 
+      objectReference: {fileID: 11400000, guid: 7182d10998fb66a4b82b68ff9db267fe, type: 2}
     - target: {fileID: 4266649305459911540, guid: 84c28640e6b95a64bbe3d2e113355e4d, type: 3}
       propertyPath: killText
       value: 
