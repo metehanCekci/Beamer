@@ -23,11 +23,15 @@ public class MeleeWeaponController : MonoBehaviour
 
     private float attackTimer;
     private Vector2 lastMoveDirection = Vector2.down; // Track last movement direction
-    
+
+    private Animator animator;
+
     // No input actions needed for auto-attack melee weapon
 
     void Start()
     {
+        animator = GetComponent<Animator>();
+
         if (weaponData == null)
         {
             Debug.LogError("WeaponData not assigned to MeleeWeaponController!");
@@ -69,11 +73,21 @@ public class MeleeWeaponController : MonoBehaviour
         }
     }
 
+    void TriggerAttackAnimation()
+    {
+        if (animator != null)
+        {
+            animator.SetTrigger("Attack");
+        }
+    }
+
     void PerformArcAttack()
     {
         // Get facing angle from movement direction
         float facingAngle = Mathf.Atan2(lastMoveDirection.y, lastMoveDirection.x) * Mathf.Rad2Deg;
-        
+
+        TriggerAttackAnimation();
+
         // Attack in a wide arc in front of player
         DamageInArc(facingAngle, attackArcAngle);
         SpawnSlashEffect(facingAngle);

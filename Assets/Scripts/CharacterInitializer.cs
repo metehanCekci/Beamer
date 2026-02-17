@@ -17,10 +17,13 @@ public class CharacterInitializer : MonoBehaviour
     private Animator animator;
     private SpriteRenderer spriteRenderer;
 
+    [Header("Fallback")]
+    [SerializeField] private CharacterData fallbackCharacter;
+
     [Header("Current Character")]
     public CharacterData currentCharacter;
 
-    void Awake()
+    void Start()
     {
         // Get components
         playerStats = GetComponent<PlayerStats>();
@@ -30,40 +33,54 @@ public class CharacterInitializer : MonoBehaviour
         animator = GetComponent<Animator>();
         spriteRenderer = GetComponentInChildren<SpriteRenderer>();
 
-        // Load selected character
+        // 1) Load from CharacterDatabase
         if (CharacterDatabase.Instance != null)
         {
             currentCharacter = CharacterDatabase.Instance.GetCurrentCharacter();
             Debug.Log($"[CharacterInitializer] Loaded character: {(currentCharacter != null ? currentCharacter.characterName : "NULL")}");
-            
+
             if (PersistentGameManager.Instance != null)
             {
                 Debug.Log($"[CharacterInitializer] Selected index from PersistentGameManager: {PersistentGameManager.Instance.selectedCharacterIndex}");
             }
+
+            // If still null, try first character in database
+            if (currentCharacter == null && CharacterDatabase.Instance.GetCharacterCount() > 0)
+            {
+                currentCharacter = CharacterDatabase.Instance.GetCharacter(0);
+                Debug.LogWarning("[CharacterInitializer] No character selected, using first character in database.");
+            }
         }
         else
         {
-            Debug.LogError("[CharacterInitializer] CharacterDatabase.Instance is NULL!");
+            Debug.LogWarning("[CharacterInitializer] CharacterDatabase.Instance is NULL!");
         }
 
-        // If no character selected, try to get from database
+        // 2) Use fallbackCharacter
+        if (currentCharacter == null && fallbackCharacter != null)
+        {
+            currentCharacter = fallbackCharacter;
+            Debug.LogWarning("[CharacterInitializer] Using fallbackCharacter.");
+        }
+
+        // 3) Try Resources.Load
         if (currentCharacter == null)
         {
-            Debug.LogWarning("No character selected! Using first character in database.");
-            if (CharacterDatabase.Instance != null && CharacterDatabase.Instance.GetCharacterCount() > 0)
+            currentCharacter = Resources.Load<CharacterData>("Beamer");
+            if (currentCharacter != null)
             {
-                currentCharacter = CharacterDatabase.Instance.GetCharacter(0);
+                Debug.LogWarning("[CharacterInitializer] Loaded character from Resources/Beamer.");
             }
         }
 
-        // Initialize character
+        // 4) Nothing found – error
         if (currentCharacter != null)
         {
             InitializeCharacter();
         }
         else
         {
-            Debug.LogError("No CharacterData found! Player cannot be initialized.");
+            Debug.LogError("[CharacterInitializer] No CharacterData found! Player cannot be initialized.");
         }
     }
 

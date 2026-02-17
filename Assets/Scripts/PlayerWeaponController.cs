@@ -21,6 +21,8 @@ public class PlayerWeaponController : MonoBehaviour
     private float fireTimer;
     private bool isFiring = false;
 
+    private Animator animator;
+
     // Input Actions
     private InputSystem_Actions inputActions;
     private InputAction chargedShotAction;
@@ -40,6 +42,8 @@ public class PlayerWeaponController : MonoBehaviour
 
     void Start()
     {
+        animator = GetComponent<Animator>();
+
         if (firePoint == null)
         {
             firePoint = transform;
@@ -212,8 +216,18 @@ public class PlayerWeaponController : MonoBehaviour
         }
     }
 
+    void TriggerAttackAnimation()
+    {
+        if (animator != null)
+        {
+            animator.SetTrigger("Attack");
+        }
+    }
+
     void FireProjectile(Vector3 targetPosition)
     {
+        TriggerAttackAnimation();
+
         GameObject projectileGO;
         
         // Spawn from firePoint position

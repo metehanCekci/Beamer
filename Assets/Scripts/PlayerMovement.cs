@@ -111,6 +111,13 @@ public class PlayerMovement : MonoBehaviour
             animator.SetFloat("Horizontal", moveInput.x);
             animator.SetFloat("Vertical", moveInput.y);
         }
+
+        // Sprite flip: sola gidiyorsa flipX = true, sağa gidiyorsa false
+        SpriteRenderer sr = GetComponentInChildren<SpriteRenderer>();
+        if (sr != null && moveInput.x != 0f)
+        {
+            sr.flipX = moveInput.x < 0f;
+        }
     }
 
     void OnDashPerformed(InputAction.CallbackContext context)
